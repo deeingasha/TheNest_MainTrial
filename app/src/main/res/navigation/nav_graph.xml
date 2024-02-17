@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/onboardingFrag">
+
+    <fragment
+        android:id="@+id/onboardingFrag"
+        android:name="com.example.thenest_maintrial.onboarding.OnboardingFrag"
+        android:label="OnboardingFrag"
+        tools:layout="@layout/onboarding_frag">
+        <action
+            android:id="@+id/action_onboardingFrag_to_createAccountFragment"
+            app:destination="@id/createAccountFragment" />
+        <action
+            android:id="@+id/action_onboardingFrag_to_accLookup"
+            app:destination="@id/accLookup" />
+    </fragment>
+    <fragment
+        android:id="@+id/createAccountFragment"
+        android:name="com.example.thenest_maintrial.createaccount.CreateAccountFragment"
+        android:label="CreateAccountFragment"
+        tools:layout="@layout/acc_creation">
+        <action
+            android:id="@+id/action_createAccountFragment_to_securityQuestionFragment"
+            app:destination="@id/securityQuestionFragment" />
+        <action
+            android:id="@+id/action_createAccountFragment_to_onboardingFrag"
+            app:destination="@id/onboardingFrag" />
+
+    </fragment>
+    <fragment
+        android:id="@+id/securityQuestionFragment"
+        android:name="com.example.spenndify.createaccount.SecurityQuestionFragment"
+        android:label="SecurityQuestionFragment"
+        tools:layout="@layout/security_questions">
+        <action
+            android:id="@+id/action_securityQuestionFragment_to_createPinFragment"
+            app:destination="@id/createPinFragment" />
+        <argument
+            android:name="fname"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="@null" />
+        <argument
+            android:name="lname"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="@null" />
+        <argument
+            android:name="idNo"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="@null"/>
+        <argument
+            android:name="emailAdd"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="@null"/>
+        <argument
+            android:name="phoneNo"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="@null"/>
+    </fragment>
+    <fragment
+        android:id="@+id/accLookup"
+        android:name="com.example.spenndify.login.AccLookup"
+        android:label="AccLookup"
+        tools:layout="@layout/acc_lookup">
+        <action
+            android:id="@+id/action_accLookup_to_onboardingFrag"
+            app:destination="@id/onboardingFrag" />
+        <action
+            android:id="@+id/action_accLookup_to_loginWelcomeFragment"
+            app:destination="@id/loginWelcomeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/createPinFragment"
+        android:name="com.example.spenndify.createaccount.CreatePinFragment"
+        android:label="CreatePinFragment"
+        tools:layout="@layout/create_pin_frag" >
+        <action
+            android:id="@+id/action_createPinFragment_to_loginWelcomeFragment"
+            app:destination="@id/loginWelcomeFragment" />
+
+        <argument
+            android:name="fname"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="@null" />
+        <argument
+            android:name="lname"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="@null" />
+        <argument
+            android:name="idNo"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="@null"/>
+        <argument
+            android:name="emailAdd"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="@null"/>
+        <argument
+            android:name="phoneNo"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="@null"/>
+        <argument
+            android:name="q1"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="@null"/>
+        <argument
+            android:name="a1"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="@null"/>
+        <argument
+            android:name="q2"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="@null"/>
+        <argument
+            android:name="a2"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="@null"/>
+        <argument
+            android:name="q3"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="@null"/>
+        <argument
+            android:name="a3"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="@null"/>
+
+    </fragment>
+    <fragment
+        android:id="@+id/loginWelcomeFragment"
+        android:name="com.example.spenndify.login.LoginWelcomeFragment"
+        android:label="LoginWelcomeFragment"
+        tools:layout="@layout/login_welcome">
+        <action
+            android:id="@+id/action_loginWelcomeFragment_to_loginPinFragment"
+            app:destination="@id/loginPinFragment" />
+        <argument
+            android:name="fname"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="@null"/>
+        <argument
+            android:name="lname"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="@null"/>
+    </fragment>
+    <fragment
+        android:id="@+id/loginPinFragment"
+        android:name="com.example.spenndify.login.LoginPinFragment"
+        android:label="LoginPinFragment"
+        tools:layout="@layout/create_pin_frag">
+        <action
+            android:id="@+id/action_loginPinFragment_to_forgotPinFragment"
+            app:destination="@id/forgotPinFragment" />
+        <action
+            android:id="@+id/action_loginPinFragment_to_dashboardFragment"
+            app:destination="@id/dashboardFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/forgotPinFragment"
+        android:name="com.example.spenndify.login.ForgotPinFragment"
+        android:label="ForgotPinFragment"
+        tools:layout="@layout/forgot_pin_layout">
+        <action
+            android:id="@+id/action_forgotPinFragment_to_createPinFragment"
+            app:destination="@id/createPinFragment" />
+        <action
+            android:id="@+id/action_forgotPinFragment_to_verifyIdFragment"
+            app:destination="@id/verifyIdFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/verifyIdFragment"
+        android:name="com.example.spenndify.login.VerifyIdFragment"
+        android:label="VerifyIdFragment"
+        tools:layout="@layout/verify_id"/>
+    <fragment
+        android:id="@+id/dashboardFragment"
+        android:name="com.example.spenndify.dashboard.DashboardFragment"
+        android:label="DashboardFragment"
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/action_dashboardFragment_to_addTransactionFragment"
+            app:destination="@id/addTransactionFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addTransactionFragment"
+        android:name="com.example.spenndify.addtransaction.AddTransactionFragment"
+        android:label="AddTransactionFragment"
+        tools:layout="@layout/add_expense_layout"/>
+</navigation>
