@@ -32,7 +32,7 @@
     </fragment>
     <fragment
         android:id="@+id/securityQuestionFragment"
-        android:name="com.example.spenndify.createaccount.SecurityQuestionFragment"
+        android:name="com.example.thenest_maintrial.createaccount.SecurityQuestionFragment"
         android:label="SecurityQuestionFragment"
         tools:layout="@layout/security_questions">
         <action
