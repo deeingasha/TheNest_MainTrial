@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/nav_home"
+        android:title="Home"
+        android:icon="@drawable/outline_home_24"/>
+
+    <item android:id="@+id/nav_calendar"
+        android:title="Calendar"
+        android:icon="@drawable/outline_calendar_month_24"/>
+
+    <item android:id="@+id/place_holder"
+        android:title=""/>
+
+    <item android:id="@+id/nav_maintenance"
+        android:title="Maintenance"
+        android:icon="@drawable/outline_build_24"/>
+
+    <item android:id="@+id/nav_report"
+        android:title="Reports"
+        android:icon="@drawable/outline_summarize_24"/>
+
+</menu>
