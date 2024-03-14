@@ -1,9 +1,10 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
-    id ("kotlin-kapt")
+
     id ("androidx.navigation.safeargs.kotlin")
-    //id ("dagger.hilt.android.plugin")
+    id ("dagger.hilt.android.plugin")
+    id ("kotlin-kapt")
 }
 
 android {
@@ -76,12 +77,48 @@ dependencies {
     implementation ("androidx.navigation:navigation-compose:2.7.7")
     implementation ("androidx.navigation:navigation-testing:2.7.7")
 
+//change problem depencecies declararation to match the other by adding parenthesis and double quotes
+    implementation ("com.airbnb.android:lottie:5.2.0")
+
+
     implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0")
     // LiveData
     implementation ("androidx.lifecycle:lifecycle-livedata-ktx:2.7.0")
 
+    //room
+    implementation ("androidx.room:room-runtime:2.6.1")
+    kapt ("androidx.room:room-compiler:2.6.1")
+    implementation ("androidx.room:room-ktx:2.6.1")
+
+    //coroutines
+    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.1")
+    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.1")
+
     //country code picker
     implementation ("com.hbb20:ccp:2.5.4")
+
+    //retrofit and gson
+    implementation ("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
+
+    implementation ("com.squareup.okhttp3:logging-interceptor:4.12.0")
+
+    //hilt
+    implementation ("com.google.dagger:hilt-android:2.40")
+    kapt ("com.google.dagger:hilt-android-compiler:2.39.1")
+
+//    implementation("androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha03")
+    kapt ("androidx.hilt:hilt-compiler:1.0.0")
+
+
+    implementation ("androidx.activity:activity-ktx:1.8.2")
+
+    //jwt
+    implementation ("com.auth0.android:jwtdecode:2.0.2")
+    implementation ("io.jsonwebtoken:jjwt:0.12.5")
+
+    //datastore
+    implementation ("androidx.datastore:datastore-preferences:1.0.0")
 
     //compose
     implementation("androidx.activity:activity-compose:1.8.2")
@@ -94,4 +131,7 @@ dependencies {
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
+}
+kapt {
+    correctErrorTypes = true
 }

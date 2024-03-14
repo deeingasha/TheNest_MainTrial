@@ -35,7 +35,7 @@ class OnboardingFrag: Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.loginBtn.setOnClickListener {
-             showAccLookup()
+             showLoginPage()
         }
         binding.GetStartedBtn.setOnClickListener {
 
@@ -44,9 +44,9 @@ class OnboardingFrag: Fragment() {
         }
     }
 
-   private fun showAccLookup(){
-
-       val action = OnboardingFragDirections.actionOnboardingFragToAccLookup()
+   private fun showLoginPage(){// TODO: change  to login first
+       val action = OnboardingFragDirections.actionOnboardingFragToLoginFrag()
+       //val action = OnboardingFragDirections.actionOnboardingFragToAccLookup()
         findNavController().navigate(action)
     }
 
@@ -55,20 +55,20 @@ class OnboardingFrag: Fragment() {
         onboardingItemAdapter = OnboardingItemAdapter(
             listOf(
                 OnboardingItemModel(
-                    onboardingImage = R.drawable.group_1,
+                   // onboardingImage = R.drawable.group_1,
                     onboardingText1 = "Welcome to The Nest",
                     onboardingText2 = "Manage your property with ease from\n" +
                             "One place"
                  ),
                 OnboardingItemModel(
-                  onboardingImage = R.drawable.group_1,
+                 // onboardingImage = R.drawable.group_1,
                  onboardingText1 = "Manage Properties",
                     onboardingText2 = "Making the renting experience easier\n" +
                             "At your fingertips"
                  ),
 
                 OnboardingItemModel(
-                    onboardingImage = R.drawable.group_1,
+                    //onboardingImage = R.drawable.group_1,
                     onboardingText1 ="View statements",
                     onboardingText2 = "View rent payments statements to\n" +
                             "analyze your finances"

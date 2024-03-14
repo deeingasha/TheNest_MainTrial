@@ -9,18 +9,20 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.fragment.NavHostFragment
-import java.util.Timer
-import kotlin.concurrent.schedule
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers.Main
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
     var contentHasLoaded = false
+    private val scope = CoroutineScope(Main)
+
     companion object {
 
         fun newIntent(context: Context): Intent {
 
-            val intent = Intent(context, MainActivity::class.java)
-
-            return intent
+            return Intent(context, MainActivity::class.java)
         }
     }
 
@@ -40,7 +42,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun startLoadingContent(){
-        Timer().schedule(2000){
+        scope.launch{
+            delay(2000)
             contentHasLoaded = true
         }
     }

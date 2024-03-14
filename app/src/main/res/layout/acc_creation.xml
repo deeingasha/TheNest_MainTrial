@@ -1,8 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/password_InputLayout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="16dp"
+        android:hint="Password"
+        app:errorEnabled="false"
+        app:hintTextColor="#525252"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/acc_ll">
+
+        <EditText
+            android:id="@+id/password_input"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fontFamily="@font/nunito_sans"
+            android:inputType="textPassword"
+            android:singleLine="true"
+            android:textColorHint="#525252" />
+    </com.google.android.material.textfield.TextInputLayout>
 
     <ImageView
         android:id="@+id/imageView4"
@@ -34,7 +60,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="12dp"
         android:layout_marginEnd="16dp"
         android:hint="First Name"
         app:errorEnabled="false"
@@ -136,15 +162,17 @@
             android:textColorHint="#525252" />
         <!--android:hint="Eg. name@gmail.com"-->
     </com.google.android.material.textfield.TextInputLayout>
+
     <LinearLayout
+        android:id="@+id/acc_ll"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:orientation="horizontal"
         android:background="@drawable/textinput_border"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+        android:orientation="horizontal"
         android:weightSum="3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -156,17 +184,17 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
-            app:ccp_defaultNameCode="KE"
             app:ccp_autoDetectCountry="true"
+            app:ccp_defaultNameCode="KE"
             app:ccp_showNameCode="true"
             app:ccp_textSize="14sp" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/phone_no_layout"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-            android:layout_weight="2"
-            android:layout_height="wrap_content"
             android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
             android:hint="Phone Number"
             app:boxStrokeColor="#707070"
             app:hintAnimationEnabled="true"
@@ -179,9 +207,9 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/phone_no"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-                android:background="@drawable/textinput_border"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@drawable/textinput_border"
                 android:cursorVisible="true"
                 android:hint="Eg. 712345678"
                 android:inputType="number"
@@ -228,6 +256,31 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/layer_2"
         android:contentDescription="back utton" />
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/passwordCon_InputLayout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="16dp"
+        android:hint="Password"
+        endIconMode="password_toggle"
+        app:errorEnabled="false"
+        app:hintTextColor="#525252"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/password_InputLayout">
+
+        <EditText
+            android:id="@+id/passwordCon_input"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fontFamily="@font/nunito_sans"
+            android:inputType="textPassword"
+            android:singleLine="true"
+            android:textColorHint="#525252" />
+    </com.google.android.material.textfield.TextInputLayout>
 
 
     <!--TODO (the hints)-->

@@ -1,24 +1,28 @@
 package com.example.thenest_maintrial.createaccount
 
 import android.os.Bundle
+import android.os.Handler
 import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.example.thenest_maintrial.VerifyPopup
 import com.example.thenest_maintrial.databinding.AccCreationBinding
 
-class CreateAccountFragment: Fragment() {
+
+class CreateAccountFragment : Fragment() {
 
     private lateinit var binding: AccCreationBinding
+    private val popup = VerifyPopup
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = AccCreationBinding.inflate(inflater,container,false)
+        binding = AccCreationBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -28,21 +32,34 @@ class CreateAccountFragment: Fragment() {
         binding.apply {
             continueCaBtn.setOnClickListener {
 
-
-
                 if (validateForm()) {
 
+
                     hideErrorMessage()
+                    popup.createVerifyPopup(context)
+
+
                     val action =
                         CreateAccountFragmentDirections.actionCreateAccountFragmentToSecurityQuestionFragment(
-                            binding.fName.text.toString(),
-                            binding.lName.text.toString(),
-                            binding.idNo.text.toString(),
-                            binding.emailInput.text.toString(),
-                            binding.phoneNo.text.toString(),
+//                            binding.fName.text.toString(),
+//                            binding.lName.text.toString(),
+//                            binding.idNo.text.toString(),
+//                            binding.emailInput.text.toString(),
+//                            binding.phoneNo.text.toString(),
+//                            binding.passwordConInput.text.toString()
                         )
                     findNavController().navigate(action)
+                    Handler().postDelayed({
+                        popup.dialog.dismiss()
+                        popup.timeCountdown.cancel()
+                        //TODO change back to actually verifying number before moving on
+                    }, 6000)
 
+               val phoneNumber = binding.phoneNo.text.toString()
+               var phoneStart =phoneNumber?.subSequence(0,4)
+               var phoneEnd = phoneNumber?.subSequence(7,9)
+               popup.numberText.text = "We’ve sent a verification code to +254${phoneStart}***${phoneEnd}"
+               popup.timeCountdown.start()
                 }
                 //TODO() uncomment validation
 
@@ -55,15 +72,23 @@ class CreateAccountFragment: Fragment() {
         }
 
     }
+
     //TODO work on this function
+    private fun validatePassword(password: String): Boolean {
+        val passwordPattern = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$"
+        val passwordMatcher = Regex(passwordPattern)
 
+        return passwordMatcher.matches(password)
+    }
 
-    private fun validateForm():Boolean{
+    private fun validateForm(): Boolean {
         val firstName = (binding.fName.text).toString()
         val lastName = binding.lName.text.toString()
         val idNo = binding.idNo.text.toString()
         val email = binding.emailInput.text.toString()
         val phoneNo = binding.phoneNo.text.toString()
+        val password = binding.passwordInput.text.toString()
+        val confirmPassword = binding.passwordConInput.text.toString()
 
         binding.apply {
             when {
@@ -72,48 +97,88 @@ class CreateAccountFragment: Fragment() {
                     fnameInputLayout.error = "Please input first name"
                     return false
                 }
+
+                firstName.length < 3 -> {
+                    fnameInputLayout.isErrorEnabled = true
+                    fnameInputLayout.error = "First name should be at least 3 characters"
+                    return false
+                }
+
                 lastName.isEmpty() -> {
                     lnameInputLayout.isErrorEnabled = true
                     lnameInputLayout.error = "Please input last name"
                     return false
                 }
+
+                lastName.length < 2 -> {
+                    lnameInputLayout.isErrorEnabled = true
+                    lnameInputLayout.error = "Last name should be at least 2 characters"
+                    return false
+                }
+
                 idNo.isEmpty() -> {
                     idnoInputLayout.isErrorEnabled = true
                     idnoInputLayout.error = "Please input ID number"
                     return false
                 }
-                idNo.length <7 -> {
+
+                idNo.length < 7 -> {
                     idnoInputLayout.isErrorEnabled = true
                     idnoInputLayout.error = "ID number should be at least 7 characters"
                     return false
                 }
+
                 email.isEmpty() -> {
                     emailInputLayout.isErrorEnabled = true
-                    emailInputLayout.error= "Please input email address"
+                    emailInputLayout.error = "Please input email address"
                     return false
                 }
+
                 !Patterns.EMAIL_ADDRESS.matcher(email).matches() -> {
                     emailInputLayout.isErrorEnabled = true
-                    emailInputLayout.error= "Please input a valid email address"
+                    emailInputLayout.error = "Please input a valid email address"
                     return false
                 }
+
                 phoneNo.isEmpty() -> {
                     phoneNoLayout.isErrorEnabled = true
+                    accLl.background = null
                     phoneNoLayout.error = "Please input phone number"
                     return false
                 }
-                phoneNo.length<9 -> {
+
+                phoneNo.length < 9 -> {
                     phoneNoLayout.isErrorEnabled = true
-                    phoneNoLayout.error = "Phone number should be 9 numbers"
+                    accLl.background = null
+                    phoneNoLayout.error = "Number should be 9 numbers"
                     return false
                 }
                 //TODO figure this out still proceeds despite error
+                password.isEmpty() -> {
+                    passwordInputLayout.isErrorEnabled = true
+                    passwordInputLayout.error = "Please input password"
+                    return false
+                }
+
+                !validatePassword(password) -> {
+                    passwordInputLayout.isErrorEnabled = true
+                    passwordInputLayout.error =
+                        "Password should contain at least 8 characters, 1 uppercase, 1 lowercase, 1 number and 1 special character"
+                    return false
+                }
+
+                confirmPassword != password -> {
+                    passwordConInputLayout.isErrorEnabled = true
+                    passwordConInputLayout.error = "Passwords do not match"
+                    return false
+                }
+
                 else -> return true
             }
         }
     }
 
-    private fun hideErrorMessage(){
+    private fun hideErrorMessage() {
         binding.apply {
             fnameInputLayout.isErrorEnabled = false
             lnameInputLayout.isErrorEnabled = false

@@ -1,7 +1,9 @@
 <resources>
-    <string name="app_name">TheNest_MainTrial</string>
+    <string name="app_name">TheNest</string>
     <string name="please_input_answer">Please input answer</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="logo">logo</string>
+    <string name="cancel">cancel</string>
     />
 </resources>
