@@ -3,7 +3,7 @@ plugins {
     id("org.jetbrains.kotlin.android")
 
     id ("androidx.navigation.safeargs.kotlin")
-    id ("dagger.hilt.android.plugin")
+    id("com.google.dagger.hilt.android")
     id ("kotlin-kapt")
 }
 
@@ -104,11 +104,11 @@ dependencies {
     implementation ("com.squareup.okhttp3:logging-interceptor:4.12.0")
 
     //hilt
-    implementation ("com.google.dagger:hilt-android:2.40")
-    kapt ("com.google.dagger:hilt-android-compiler:2.39.1")
+    implementation ("com.google.dagger:hilt-android:2.51")
+    kapt ("com.google.dagger:hilt-android-compiler:2.51")
 
 //    implementation("androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha03")
-    kapt ("androidx.hilt:hilt-compiler:1.0.0")
+  //  kapt ("androidx.hilt:hilt-compiler:1.0.0")
 
 
     implementation ("androidx.activity:activity-ktx:1.8.2")

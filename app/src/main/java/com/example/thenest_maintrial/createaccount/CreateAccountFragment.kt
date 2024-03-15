@@ -1,20 +1,27 @@
 package com.example.thenest_maintrial.createaccount
 
 import android.os.Bundle
-import android.os.Handler
 import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.thenest_maintrial.VerifyPopup
 import com.example.thenest_maintrial.databinding.AccCreationBinding
+import com.example.thenest_maintrial.model.User
+import com.example.thenest_maintrial.utils.Status
+import com.example.thenest_maintrial.utils.showToast
+import dagger.hilt.android.AndroidEntryPoint
 
 
+@AndroidEntryPoint
 class CreateAccountFragment : Fragment() {
 
     private lateinit var binding: AccCreationBinding
+    private val viewModel: CreateAccountViewModel by viewModels()
     private val popup = VerifyPopup
 
     override fun onCreateView(
@@ -36,30 +43,38 @@ class CreateAccountFragment : Fragment() {
 
 
                     hideErrorMessage()
-                    popup.createVerifyPopup(context)
+//                    popup.createVerifyPopup(context)
+
+                    val firstName = (binding.fName.text).toString()
+                    val lastName = binding.lName.text.toString()
+                    val idNo = binding.idNo.text.toString()
+                    val email = binding.emailInput.text.toString()
+                    val phoneNo = binding.phoneNo.text.toString()
+                    val confirmPassword = binding.passwordConInput.text.toString()
+                    val user = User(
+                        fName = firstName,
+                        lName = lastName,
+                        idNumber = idNo,
+                        email = email,
+                        phoneNo = phoneNo,
+                        password = confirmPassword,
+                    )
 
 
-                    val action =
-                        CreateAccountFragmentDirections.actionCreateAccountFragmentToSecurityQuestionFragment(
-//                            binding.fName.text.toString(),
-//                            binding.lName.text.toString(),
-//                            binding.idNo.text.toString(),
-//                            binding.emailInput.text.toString(),
-//                            binding.phoneNo.text.toString(),
-//                            binding.passwordConInput.text.toString()
-                        )
-                    findNavController().navigate(action)
-                    Handler().postDelayed({
-                        popup.dialog.dismiss()
-                        popup.timeCountdown.cancel()
-                        //TODO change back to actually verifying number before moving on
-                    }, 6000)
+//                    Handler().postDelayed({
+//                        popup.dialog.dismiss()
+//                        popup.timeCountdown.cancel()
+//                        //TODO change back to actually verifying number before moving on
+//                    }, 6000)
 
-               val phoneNumber = binding.phoneNo.text.toString()
-               var phoneStart =phoneNumber?.subSequence(0,4)
-               var phoneEnd = phoneNumber?.subSequence(7,9)
-               popup.numberText.text = "We’ve sent a verification code to +254${phoneStart}***${phoneEnd}"
-               popup.timeCountdown.start()
+//                    val phoneNumber = binding.phoneNo.text.toString()
+//                    var phoneStart = phoneNumber?.subSequence(0, 4)
+//                    var phoneEnd = phoneNumber?.subSequence(7, 9)
+//                    popup.numberText.text =
+//                        "We’ve sent a verification code to +254${phoneStart}***${phoneEnd}"
+//                    popup.timeCountdown.start()
+
+                    saveUserDetails(user)
                 }
                 //TODO() uncomment validation
 
@@ -73,12 +88,44 @@ class CreateAccountFragment : Fragment() {
 
     }
 
+    private fun saveUserDetails(user: User) {
+        viewModel.saveUserDetails(user).observe(viewLifecycleOwner) {
+            binding.apply {
+                it.let { resource ->
+                    when (resource.status) {
+                        Status.SUCCESS -> {
+                            Toast.makeText(context, "works!!", Toast.LENGTH_SHORT).show()
+
+
+                            val action =
+                                CreateAccountFragmentDirections.actionCreateAccountFragmentToSecurityQuestionFragment()
+                            findNavController().navigate(action)
+
+                        }
+
+                        Status.ERROR -> {
+                            showToast(resource.message.toString())
+                        }
+
+                        Status.LOADING -> {
+                            Toast.makeText(context, "Loading", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     //TODO work on this function
     private fun validatePassword(password: String): Boolean {
         val passwordPattern = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$"
         val passwordMatcher = Regex(passwordPattern)
 
         return passwordMatcher.matches(password)
+    }
+
+    private fun bindData() {
+        //todo improve
     }
 
     private fun validateForm(): Boolean {
