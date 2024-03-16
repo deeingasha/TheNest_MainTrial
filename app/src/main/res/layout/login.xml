@@ -74,8 +74,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fontFamily="@font/nunito_sans"
-            android:inputType="text"
-            android:maxLength="20"
+            android:inputType="textEmailAddress"
             android:singleLine="true"
             android:textColorHint="#525252" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -89,14 +88,14 @@
         android:layout_marginTop="15dp"
         android:layout_marginEnd="16dp"
         android:hint="Password"
-        endIconMode="password_toggle"
+        app:endIconMode="password_toggle"
         app:errorEnabled="false"
         app:hintTextColor="#525252"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/emailLogin_InputLayout">
 
-        <EditText
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/passwordLogin_input"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
