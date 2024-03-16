@@ -1,4 +1,4 @@
-package com.example.spenndify.data.local
+package com.example.thenest_maintrial.data.local
 
 import androidx.room.Dao
 import androidx.room.Insert
