@@ -1,6 +1,6 @@
 package com.example.thenest_maintrial.repo.userRepository
 
-import com.example.spenndify.data.local.UserDao
+import com.example.thenest_maintrial.data.local.UserDao
 import com.example.thenest_maintrial.model.User
 
 class UserRepositoryImpl(
