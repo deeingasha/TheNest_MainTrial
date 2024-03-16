@@ -41,8 +41,6 @@ class CreateAccountFragment : Fragment() {
 
                 if (validateForm()) {
 
-
-                    hideErrorMessage()
 //                    popup.createVerifyPopup(context)
 
                     val firstName = (binding.fName.text).toString()
@@ -94,9 +92,8 @@ class CreateAccountFragment : Fragment() {
                 it.let { resource ->
                     when (resource.status) {
                         Status.SUCCESS -> {
-                            Toast.makeText(context, "works!!", Toast.LENGTH_SHORT).show()
-
-
+                            Toast.makeText(context, resource.message, Toast.LENGTH_SHORT).show()
+                            println("resource.data: $resource")
                             val action =
                                 CreateAccountFragmentDirections.actionCreateAccountFragmentToSecurityQuestionFragment()
                             findNavController().navigate(action)
@@ -105,6 +102,7 @@ class CreateAccountFragment : Fragment() {
 
                         Status.ERROR -> {
                             showToast(resource.message.toString())
+                            println("resource.error: $resource")
                         }
 
                         Status.LOADING -> {
@@ -138,6 +136,7 @@ class CreateAccountFragment : Fragment() {
         val confirmPassword = binding.passwordConInput.text.toString()
 
         binding.apply {
+            hideErrorMessage()
             when {
                 firstName.isEmpty() -> {
                     fnameInputLayout.isErrorEnabled = true

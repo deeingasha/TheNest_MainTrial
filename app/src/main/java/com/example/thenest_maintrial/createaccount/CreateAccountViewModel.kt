@@ -6,6 +6,7 @@ import com.example.thenest_maintrial.model.User
 import com.example.thenest_maintrial.repo.RegisterRepository
 import com.example.thenest_maintrial.repo.userRepository.UserRepository
 import com.example.thenest_maintrial.utils.Resource
+import com.example.thenest_maintrial.utils.parseErrorMessage
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import javax.inject.Inject
@@ -20,10 +21,19 @@ class CreateAccountViewModel @Inject constructor(
         emit(Resource.loading(data = null))
 
         try {
-            emit(Resource.success(registerRepository.postUserDetails(user)))
-            userRepository.addUser(user)
+            val  response = registerRepository.postUserDetails(user)
+            println("Response  from server: ${response.body()}")
+
+            if (response.isSuccessful){
+                emit(Resource.success(data = response.body(), message = response.body()?.message))
+                userRepository.addUser(user)
+            }else{
+                val errorBody = response.errorBody()?.string()?:"Error occurred"
+                val errorMessage = parseErrorMessage(errorBody)
+                emit(Resource.error(message = errorMessage, data = null))
+            }
         }catch (e:Exception){
-            emit(Resource.error(e.message?:"Error Occurred",data = null))
-        }
+            emit(Resource.error( e.message?:"Error Occurred",data = null))
+        } //todo get custom error message
     }
 }
