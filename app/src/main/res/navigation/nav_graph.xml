@@ -40,22 +40,6 @@
             app:destination="@id/loginFrag" />
     </fragment>
     <fragment
-        android:id="@+id/loginWelcomeFragment"
-        android:name="com.example.spenndify.login.LoginWelcomeFragment"
-        android:label="LoginWelcomeFragment"
-        tools:layout="@layout/login_welcome">
-        <argument
-            android:name="fname"
-            app:argType="string"
-            app:nullable="true"
-            android:defaultValue="@null"/>
-        <argument
-            android:name="lname"
-            app:argType="string"
-            app:nullable="true"
-            android:defaultValue="@null"/>
-    </fragment>
-    <fragment
         android:id="@+id/forgotPinFragment"
         android:name="com.example.thenest_maintrial.login.ForgotPinFrag"
         android:label="ForgotPinFragment" />
@@ -65,20 +49,12 @@
         android:label="DashboardFragment"
         tools:layout="@layout/dashboard_frag">
         <action
-            android:id="@+id/action_dashboardFragment_to_addTransactionFragment"
-            app:destination="@id/addTransactionFragment" />
-        <action
             android:id="@+id/action_dashboardFragment_to_rentPaymentFragment"
             app:destination="@id/rentPaymentFragment" />
         <action
             android:id="@+id/action_dashboardFragment_to_expensesFragment"
             app:destination="@id/expensesFragment" />
     </fragment>
-    <fragment
-        android:id="@+id/addTransactionFragment"
-        android:name="com.example.spenndify.addtransaction.AddTransactionFragment"
-        android:label="AddTransactionFragment"
-        tools:layout="@layout/add_expense_layout"/>
     <fragment
         android:id="@+id/expensesFragment"
         android:name="com.example.thenest_maintrial.rentPayments.ExpensesFragment"
