@@ -2,7 +2,6 @@ package com.example.thenest_maintrial.data.local
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import com.example.spenndify.data.local.UserDao
 import com.example.thenest_maintrial.model.User
 
 @Database(
