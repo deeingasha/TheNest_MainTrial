@@ -9,6 +9,8 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.example.thenest_maintrial.LoadingDialog
+import com.example.thenest_maintrial.SharedPreferenceManager
 import com.example.thenest_maintrial.data.remote.LoginDetails
 import com.example.thenest_maintrial.databinding.LoginBinding
 import com.example.thenest_maintrial.utils.Status
@@ -19,13 +21,16 @@ import dagger.hilt.android.AndroidEntryPoint
 class LoginFrag : Fragment() {
     private lateinit var binding: LoginBinding
     private val viewModel: LoginViewModel by viewModels()
-
+    private lateinit var sharedPreferenceManager: SharedPreferenceManager
+    private lateinit var loadingDialog: LoadingDialog
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = LoginBinding.inflate(inflater, container, false)
+        sharedPreferenceManager = SharedPreferenceManager(requireContext())
+        loadingDialog = LoadingDialog(requireContext())
         return binding.root
     }
 
@@ -34,8 +39,6 @@ class LoginFrag : Fragment() {
         binding.apply {
 
             continueSqBtn.setOnClickListener {
-//                val action = LoginFragDirections.actionLoginFragToDashboardFragment()
-//                findNavController().navigate(action)
                 if (validateForm()) {
                     val email = emailLoginInput.text.toString()
                     val password = passwordLoginInput.text.toString()
@@ -61,18 +64,27 @@ class LoginFrag : Fragment() {
                     when (resource.status) {
                         Status.SUCCESS -> {
                             Toast.makeText(context, resource.message.toString(), Toast.LENGTH_SHORT).show()
+
+                            //store token in shared preference
+                            resource.data?.data?.let { token ->
+                                sharedPreferenceManager.storeToken(token)
+                            }
                             val action = LoginFragDirections.actionLoginFragToDashboardFragment()
                             findNavController().navigate(action)
 
+                                loadingDialog.dismiss()
+
+                            println("token: ${sharedPreferenceManager.getToken()}") //todo remove print statement
                         }
 
                         Status.ERROR -> {
                             showToast(resource.message.toString())
+                            loadingDialog.dismiss()
                             println("resource.message: ${resource})")
                         }
 
                         Status.LOADING -> {
-                            Toast.makeText(context, "Loading", Toast.LENGTH_SHORT).show()
+                            loadingDialog.show()
                         }
                     }
                 }
