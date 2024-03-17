@@ -35,12 +35,11 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="21dp"
         android:fontFamily="@font/nunito_sans_bold"
-        android:text="Sucks to forget your pin! Don’t worry we got you"
+        android:text="Sucks to forget your pin!\nDon’t worry we got you"
         android:textColor="@color/light_orange"
         android:textSize="22sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/logo"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/logo" />
 
     <TextView
         android:id="@+id/textView14"
@@ -49,7 +48,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:fontFamily="@font/nunito_sans_bold"
-        android:text="Please answer the security question below"
+        android:text="Please enter email and new password below"
         android:textColor="#707070"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView13" />
@@ -78,6 +77,32 @@
             android:fontFamily="@font/nunito_sans"
             android:inputType="text"
             android:maxLength="20"
+            android:singleLine="true"
+            android:textColorHint="#525252" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/passwordFP_InputLayout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="16dp"
+        android:hint="Password"
+        app:endIconMode="password_toggle"
+        app:errorEnabled="false"
+        app:hintTextColor="#525252"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/emailFP_InputLayout">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/passwordFP_input"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fontFamily="@font/nunito_sans"
+            android:inputType="textPassword"
             android:singleLine="true"
             android:textColorHint="#525252" />
     </com.google.android.material.textfield.TextInputLayout>
