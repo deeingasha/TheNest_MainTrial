@@ -5,7 +5,6 @@ import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -63,7 +62,7 @@ class LoginFrag : Fragment() {
                 it.let { resource ->
                     when (resource.status) {
                         Status.SUCCESS -> {
-                            Toast.makeText(context, resource.message.toString(), Toast.LENGTH_SHORT).show()
+                            showToast(resource.message.toString())
 
                             //store token in shared preference
                             resource.data?.data?.let { token ->
@@ -72,7 +71,7 @@ class LoginFrag : Fragment() {
                             val action = LoginFragDirections.actionLoginFragToDashboardFragment()
                             findNavController().navigate(action)
 
-                                loadingDialog.dismiss()
+                            loadingDialog.dismiss()
 
                             println("token: ${sharedPreferenceManager.getToken()}") //todo remove print statement
                         }
@@ -80,7 +79,7 @@ class LoginFrag : Fragment() {
                         Status.ERROR -> {
                             showToast(resource.message.toString())
                             loadingDialog.dismiss()
-                            println("resource.message: ${resource})")
+                            println("resource.message: $resource")
                         }
 
                         Status.LOADING -> {

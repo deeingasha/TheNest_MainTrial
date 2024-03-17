@@ -5,15 +5,16 @@ import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.example.thenest_maintrial.LoadingDialog
 import com.example.thenest_maintrial.VerifyPopup
 import com.example.thenest_maintrial.databinding.AccCreationBinding
 import com.example.thenest_maintrial.model.User
 import com.example.thenest_maintrial.utils.Status
 import com.example.thenest_maintrial.utils.showToast
+import com.example.thenest_maintrial.utils.validatePassword
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -22,6 +23,7 @@ class CreateAccountFragment : Fragment() {
 
     private lateinit var binding: AccCreationBinding
     private val viewModel: CreateAccountViewModel by viewModels()
+    private lateinit var loadingDialog: LoadingDialog
     private val popup = VerifyPopup
 
     override fun onCreateView(
@@ -30,6 +32,7 @@ class CreateAccountFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = AccCreationBinding.inflate(inflater, container, false)
+        loadingDialog = LoadingDialog(requireContext())
         return binding.root
     }
 
@@ -74,7 +77,6 @@ class CreateAccountFragment : Fragment() {
 
                     saveUserDetails(user)
                 }
-                //TODO() uncomment validation
 
             }
 
@@ -92,34 +94,28 @@ class CreateAccountFragment : Fragment() {
                 it.let { resource ->
                     when (resource.status) {
                         Status.SUCCESS -> {
-                            Toast.makeText(context, resource.message, Toast.LENGTH_SHORT).show()
+                            showToast(resource.message.toString())
                             println("resource.data: $resource")
                             val action =
                                 CreateAccountFragmentDirections.actionCreateAccountFragmentToSecurityQuestionFragment()
                             findNavController().navigate(action)
 
+                            loadingDialog.dismiss()
                         }
 
                         Status.ERROR -> {
                             showToast(resource.message.toString())
                             println("resource.error: $resource")
+                            loadingDialog.dismiss()
                         }
 
                         Status.LOADING -> {
-                            Toast.makeText(context, "Loading", Toast.LENGTH_SHORT).show()
+                            loadingDialog.show()
                         }
                     }
                 }
             }
         }
-    }
-
-    //TODO work on this function
-    private fun validatePassword(password: String): Boolean {
-        val passwordPattern = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$"
-        val passwordMatcher = Regex(passwordPattern)
-
-        return passwordMatcher.matches(password)
     }
 
     private fun bindData() {
@@ -209,7 +205,7 @@ class CreateAccountFragment : Fragment() {
                 !validatePassword(password) -> {
                     passwordInputLayout.isErrorEnabled = true
                     passwordInputLayout.error =
-                        "Password should contain at least 8 characters, 1 uppercase, 1 lowercase, 1 number and 1 special character"
+                        "Password should contain at least 8 characters, 1 uppercase, 1 lowercase, 1 number and 1 special character and no spaces"
                     return false
                 }
 

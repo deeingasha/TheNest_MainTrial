@@ -43,7 +43,11 @@
         android:id="@+id/forgotPinFragment"
         android:name="com.example.thenest_maintrial.login.ForgotPinFrag"
         android:label="ForgotPinFragment"
-        tools:layout="@layout/forgot_pin"/>
+        tools:layout="@layout/forgot_pin">
+        <action
+            android:id="@+id/action_forgotPinFragment_to_loginFrag"
+            app:destination="@id/loginFrag" />
+    </fragment>
     <fragment
         android:id="@+id/dashboardFragment"
         android:name="com.example.thenest_maintrial.dashboard.DashboardFragment"
