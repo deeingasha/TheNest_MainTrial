@@ -15,4 +15,14 @@ class SharedPreferenceManager(context: Context) {
     fun getToken(): String? {
         return sharedPreferences?.getString("token", null)
     }
+
+    fun storeUsername(username: String) {
+        with(sharedPreferences.edit()) {
+            this?.putString("username", username)
+            this?.apply()
+        }
+    }
+    fun getUsername(): String? {
+        return sharedPreferences?.getString("username", null)
+    }
 }
