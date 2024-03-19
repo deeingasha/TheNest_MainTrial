@@ -71,6 +71,8 @@ class HomeFragment : Fragment() {
                             val numOfProperties = dashboardDetails.data?.numOfProperties
                             val totalVacantUnits = dashboardDetails.data?.totalVacantUnits
                             val numOfTenants = dashboardDetails.data?.numOfTenants
+                            val tenantDetails = dashboardDetails.data?.tenantDetails
+                            println(tenantDetails)
 
                             propertiesNum.text = numOfProperties.toString()
                             tenantsNumber.text = numOfTenants.toString()
@@ -89,6 +91,7 @@ class HomeFragment : Fragment() {
                         }
                         Status.ERROR -> {
                             showToast(resource.message.toString())
+                            println("error: ${resource.message.toString()}")
                             findNavController().navigateUp()
                         }
                         Status.LOADING -> {

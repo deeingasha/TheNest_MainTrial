@@ -10,6 +10,13 @@ data class LlDashboardDetails(
     val name: String,
     val numOfProperties: Int,
     val totalVacantUnits: Int,
-    val numOfTenants: Int
+    val numOfTenants: Int,
+    val tenantDetails:List <TenantDetails>,
+)
+data class TenantDetails(
+    val fName: String,
+    val lName: String,
+    val idNumber: String,
+    val unitCode: String,
 )
 

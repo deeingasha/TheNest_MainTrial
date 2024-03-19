@@ -30,6 +30,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/group_10833" />
+
         <TextView
             android:id="@+id/textView18"
             android:layout_width="wrap_content"
@@ -39,7 +40,7 @@
             android:fontFamily="@font/nunito_sans"
             android:text="Good morning "
             android:textColor="@color/unnamed_color_707070"
-            android:textSize="12sp"
+            android:textSize="14sp"
             app:layout_constraintStart_toEndOf="@+id/imageView5"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -51,7 +52,7 @@
             android:fontFamily="@font/nunito_sans_bold"
             android:text="Dorcas Ingasha"
             android:textColor="@color/light_orange"
-            android:textSize="12sp"
+            android:textSize="14sp"
             app:layout_constraintStart_toEndOf="@+id/textView18"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -247,7 +248,7 @@
                 android:layout_height="match_parent">
 
                 <TextView
-                    android:id="@+id/textView4"
+                    android:id="@+id/fname_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
