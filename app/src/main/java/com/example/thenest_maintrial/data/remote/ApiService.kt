@@ -1,6 +1,7 @@
 package com.example.thenest_maintrial.data.remote
 
 import com.example.thenest_maintrial.data.remote.model.response.ForgotPinResponse
+import com.example.thenest_maintrial.data.remote.model.response.LL_PropertiesResponse
 import com.example.thenest_maintrial.data.remote.model.response.LlDashboardResponse
 import com.example.thenest_maintrial.data.remote.model.response.LoginResponse
 import com.example.thenest_maintrial.data.remote.model.response.UserResponse
@@ -30,4 +31,7 @@ interface ApiService {
 
     @GET("dashboard/landlord")
     suspend fun getLlDashboardDetails(): Response<LlDashboardResponse>
+
+    @GET("properties/landlord")
+    suspend fun getLlProperties(): Response<LL_PropertiesResponse>
 }

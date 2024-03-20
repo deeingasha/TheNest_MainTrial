@@ -1,0 +1,133 @@
+package com.example.thenest_maintrial.properties
+
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.ImageButton
+import android.widget.TextView
+import androidx.cardview.widget.CardView
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.airbnb.lottie.LottieAnimationView
+import com.example.thenest_maintrial.LoadingDialog
+import com.example.thenest_maintrial.R
+import com.example.thenest_maintrial.utils.Status
+import com.example.thenest_maintrial.utils.createPdf
+import com.example.thenest_maintrial.utils.showToast
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
+
+/**
+ * A fragment representing a list of Items.
+ */
+@AndroidEntryPoint
+class PropertiesFragment : Fragment() {
+
+    private var columnCount = 1
+
+  //get instance of the view model
+    private val propertiesViewModel: PropertiesViewModel by viewModels()
+
+    //reference the RecyclerView and the animation view
+    private lateinit var loadingDialog: LoadingDialog
+    private lateinit var propertiesRv: RecyclerView
+    private lateinit var emptyAnimation: LottieAnimationView
+    private lateinit var emptyText: TextView
+    private lateinit var backButon: ImageButton
+    private lateinit var titleCard:CardView
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        arguments?.let {
+            columnCount = it.getInt(ARG_COLUMN_COUNT)
+        }
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        val view = inflater.inflate(R.layout.fragment_properties_list, container, false)
+
+        //initialize the views
+        propertiesRv = view.findViewById(R.id.propertiesListRv_view)
+        emptyAnimation = view.findViewById(R.id.empty_animationP)
+        emptyText = view.findViewById(R.id.emptyProp_TV)
+        backButon = view.findViewById(R.id.property_ca_btn)
+        titleCard = view.findViewById(R.id.propertiesTitleCardView)
+
+        // Set the adapter
+        if (propertiesRv is RecyclerView) {
+            with(propertiesRv) {
+                layoutManager = when {
+                    columnCount <= 1 -> LinearLayoutManager(context)
+                    else -> GridLayoutManager(context, columnCount)
+                }
+                adapter = propertiesViewModel.propertiesRvAdapter
+            }
+        }
+        return view
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        //observe the llProperties live data
+        propertiesViewModel.llProperties.observe(viewLifecycleOwner, Observer { resource ->
+            when (resource.status) {
+                Status.SUCCESS -> {
+                    println("resource Success: ${resource.data}")
+                    if (resource.message.toString() == "No properties yet") {
+                        propertiesRv.visibility = View.GONE
+                        emptyAnimation.visibility = View.VISIBLE
+                    } else {
+                        propertiesRv.visibility = View.VISIBLE
+                        emptyAnimation.visibility = View.GONE
+                    }
+                }
+
+                Status.ERROR -> {
+                    showToast(resource.message.toString())
+                    println("Error message from server: ${resource.message.toString()}")
+
+                }
+
+                Status.LOADING -> {
+                    loadingDialog.show()
+                }
+            }
+
+        })
+        //call the getLLProperties function to get the properties from the server
+        propertiesViewModel.getLLProperties()
+
+        backButon.setOnClickListener {
+           // findNavController().navigateUp()
+            lifecycleScope.launch {
+                createPdf(requireContext(), titleCard,propertiesRv, propertiesViewModel, view, "Properties")
+            }
+        }
+
+    }
+
+    companion object {
+
+        // TODO: Customize parameter argument names
+        const val ARG_COLUMN_COUNT = "column-count"
+
+        // TODO: Customize parameter initialization
+        @JvmStatic
+        fun newInstance(columnCount: Int) =
+            PropertiesFragment().apply {
+                arguments = Bundle().apply {
+                    putInt(ARG_COLUMN_COUNT, columnCount)
+                }
+            }
+    }
+}

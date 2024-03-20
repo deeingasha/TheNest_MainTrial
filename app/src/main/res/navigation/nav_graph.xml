@@ -59,6 +59,9 @@
         <action
             android:id="@+id/action_dashboardFragment_to_expensesFragment"
             app:destination="@id/expensesFragment" />
+        <action
+            android:id="@+id/action_dashboardFragment_to_propertiesFragment"
+            app:destination="@id/propertiesFragment" />
     </fragment>
     <fragment
         android:id="@+id/expensesFragment"
@@ -86,4 +89,18 @@
         android:id="@+id/settingsFragment"
         android:name="com.example.thenest_maintrial.SettingsFragment"
         android:label="SettingsFragment" />
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.example.thenest_maintrial.dashboard.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_to_propertiesFragment"
+            app:destination="@id/propertiesFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/propertiesFragment"
+        android:name="com.example.thenest_maintrial.properties.PropertiesFragment"
+        android:label="PropertiesFragment"
+        tools:layout="@layout/fragment_properties_list"/>
 </navigation>
