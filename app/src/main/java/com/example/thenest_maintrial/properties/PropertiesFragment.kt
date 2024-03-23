@@ -10,7 +10,7 @@ import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -18,10 +18,9 @@ import com.airbnb.lottie.LottieAnimationView
 import com.example.thenest_maintrial.LoadingDialog
 import com.example.thenest_maintrial.R
 import com.example.thenest_maintrial.utils.Status
-import com.example.thenest_maintrial.utils.createPdf
 import com.example.thenest_maintrial.utils.showToast
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
 
 /**
  * A fragment representing a list of Items.
@@ -41,6 +40,8 @@ class PropertiesFragment : Fragment() {
     private lateinit var emptyText: TextView
     private lateinit var backButon: ImageButton
     private lateinit var titleCard:CardView
+    private  lateinit var addPropertyBtn: FloatingActionButton
+    private lateinit var emptyProp: TextView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -61,6 +62,9 @@ class PropertiesFragment : Fragment() {
         emptyText = view.findViewById(R.id.emptyProp_TV)
         backButon = view.findViewById(R.id.property_ca_btn)
         titleCard = view.findViewById(R.id.propertiesTitleCardView)
+        addPropertyBtn = view.findViewById(R.id.fab_add_Property)
+        emptyProp= view.findViewById(R.id.emptyProp_TV)
+
 
         // Set the adapter
         if (propertiesRv is RecyclerView) {
@@ -83,12 +87,16 @@ class PropertiesFragment : Fragment() {
             when (resource.status) {
                 Status.SUCCESS -> {
                     println("resource Success: ${resource.data}")
-                    if (resource.message.toString() == "No properties yet") {
-                        propertiesRv.visibility = View.GONE
-                        emptyAnimation.visibility = View.VISIBLE
-                    } else {
+                    println("resource message: ${resource.message}")
+                    if (resource.message.toString() != "No properties yet") {
                         propertiesRv.visibility = View.VISIBLE
                         emptyAnimation.visibility = View.GONE
+                        emptyProp.visibility = View.GONE
+
+                    } else {
+                        propertiesRv.visibility = View.GONE
+                        emptyAnimation.visibility = View.VISIBLE
+                        emptyProp.visibility = View.VISIBLE
                     }
                 }
 
@@ -107,11 +115,27 @@ class PropertiesFragment : Fragment() {
         //call the getLLProperties function to get the properties from the server
         propertiesViewModel.getLLProperties()
 
+//        //register an observer to listen for changes in the data
+//        propertiesViewModel.propertiesRvAdapter.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
+//            override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
+//                //Scroll to the new position when a new item is added
+//                propertiesRv.post{
+//                    propertiesRv.layoutManager?.scrollToPosition(propertiesViewModel.propertiesRvAdapter.itemCount - 1)
+//                }            }
+//        })
+
+//        observe the newPropertyPosition Livedata and scroll when it changes
+        propertiesViewModel.newPropertyPosition.observe(viewLifecycleOwner){position->
+            propertiesRv.layoutManager?.scrollToPosition(position)
+        }
+
         backButon.setOnClickListener {
-           // findNavController().navigateUp()
-            lifecycleScope.launch {
-                createPdf(requireContext(), titleCard,propertiesRv, propertiesViewModel, view, "Properties")
-            }
+            findNavController().navigateUp()
+
+        }
+        addPropertyBtn.setOnClickListener {
+            val action = PropertiesFragmentDirections.actionPropertiesFragmentToAddPropertyFragment()
+            findNavController().navigate(action)
         }
 
     }

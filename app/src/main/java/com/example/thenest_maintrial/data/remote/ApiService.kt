@@ -5,12 +5,15 @@ import com.example.thenest_maintrial.data.remote.model.response.LL_PropertiesRes
 import com.example.thenest_maintrial.data.remote.model.response.LlDashboardResponse
 import com.example.thenest_maintrial.data.remote.model.response.LoginResponse
 import com.example.thenest_maintrial.data.remote.model.response.UserResponse
+import com.example.thenest_maintrial.data.remote.model.response.addPropertyResponse
+import com.example.thenest_maintrial.data.remote.model.response.singlePropertyResponse
 import com.example.thenest_maintrial.model.User
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.PATCH
 import retrofit2.http.POST
+import retrofit2.http.Path
 
 interface ApiService {
 //    @Headers("Content-Type:application/json")
@@ -34,4 +37,15 @@ interface ApiService {
 
     @GET("properties/landlord")
     suspend fun getLlProperties(): Response<LL_PropertiesResponse>
+
+    @POST("properties/register")
+    suspend fun addProperty(
+        @Body   propertyDetails: PropertyDetails
+    ):Response<addPropertyResponse>
+
+   @GET("properties/{propertyId}")
+   suspend fun getSingleProperty(
+       @Path("propertyId") propertyId: String
+   ): Response<singlePropertyResponse>
+
 }

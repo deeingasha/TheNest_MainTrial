@@ -19,3 +19,8 @@ data class Prop_UnitDetails (
     val rent: Int,
     val isOccupied: Boolean,
 )
+
+data class singlePropertyResponse (
+    val data: LL_Property?,
+    val message: String,
+)
