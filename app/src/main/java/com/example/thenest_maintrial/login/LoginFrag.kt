@@ -68,12 +68,18 @@ class LoginFrag : Fragment() {
                             resource.data?.data?.let { token ->
                                 sharedPreferenceManager.storeToken(token)
                             }
+
+                            //store role in shared preference
+                            resource.data?.role?.let { role ->
+                                sharedPreferenceManager.storeRole(role)
+                            }
                             val action = LoginFragDirections.actionLoginFragToDashboardFragment()
                             findNavController().navigate(action)
 
                             loadingDialog.dismiss()
 
                             println("token: ${sharedPreferenceManager.getToken()}") //todo remove print statement
+                            println("role: ${sharedPreferenceManager.getRole()}")
                         }
 
                         Status.ERROR -> {

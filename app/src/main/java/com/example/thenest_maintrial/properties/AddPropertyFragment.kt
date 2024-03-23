@@ -54,7 +54,8 @@ class AddPropertyFragment: Fragment(){
                 }
             }
             propertyCaBtn.setOnClickListener {
-                findNavController().navigateUp()
+                val action = AddPropertyFragmentDirections.actionAddPropertyFragmentToPropertiesFragment()
+                findNavController().navigate(action)
             }
         }
     }

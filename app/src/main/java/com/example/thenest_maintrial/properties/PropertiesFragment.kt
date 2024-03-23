@@ -8,6 +8,7 @@ import android.widget.ImageButton
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
@@ -17,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.airbnb.lottie.LottieAnimationView
 import com.example.thenest_maintrial.LoadingDialog
 import com.example.thenest_maintrial.R
+import com.example.thenest_maintrial.utils.SharedViewModel
 import com.example.thenest_maintrial.utils.Status
 import com.example.thenest_maintrial.utils.showToast
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -32,6 +34,7 @@ class PropertiesFragment : Fragment() {
 
   //get instance of the view model
     private val propertiesViewModel: PropertiesViewModel by viewModels()
+    private val sharedViewModel: SharedViewModel by activityViewModels()
 
     //reference the RecyclerView and the animation view
     private lateinit var loadingDialog: LoadingDialog
@@ -55,6 +58,7 @@ class PropertiesFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_properties_list, container, false)
+        loadingDialog = LoadingDialog(requireContext())
 
         //initialize the views
         propertiesRv = view.findViewById(R.id.propertiesListRv_view)
@@ -89,11 +93,15 @@ class PropertiesFragment : Fragment() {
                     println("resource Success: ${resource.data}")
                     println("resource message: ${resource.message}")
                     if (resource.message.toString() != "No properties yet") {
+                        loadingDialog.dismiss()
                         propertiesRv.visibility = View.VISIBLE
                         emptyAnimation.visibility = View.GONE
                         emptyProp.visibility = View.GONE
 
+                        sharedViewModel.llProperties.value = resource
+
                     } else {
+                        loadingDialog.dismiss()
                         propertiesRv.visibility = View.GONE
                         emptyAnimation.visibility = View.VISIBLE
                         emptyProp.visibility = View.VISIBLE
@@ -101,6 +109,7 @@ class PropertiesFragment : Fragment() {
                 }
 
                 Status.ERROR -> {
+                    loadingDialog.dismiss()
                     showToast(resource.message.toString())
                     println("Error message from server: ${resource.message.toString()}")
 
@@ -130,7 +139,8 @@ class PropertiesFragment : Fragment() {
         }
 
         backButon.setOnClickListener {
-            findNavController().navigateUp()
+            val action = PropertiesFragmentDirections.actionPropertiesFragmentToDashboardFragment()
+            findNavController().navigate(action)
 
         }
         addPropertyBtn.setOnClickListener {

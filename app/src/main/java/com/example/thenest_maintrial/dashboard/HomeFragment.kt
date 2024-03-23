@@ -60,6 +60,10 @@ class HomeFragment : Fragment() {
                 val action = DashboardFragmentDirections.actionDashboardFragmentToPropertiesFragment()
                 findNavController().navigate(action)
             }
+            unitsCV.setOnClickListener {
+                val action = DashboardFragmentDirections.actionDashboardFragmentToUnitsFragment()
+                findNavController().navigate(action)
+            }
         }
     }
 

@@ -6,12 +6,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.example.thenest_maintrial.R
+import com.example.thenest_maintrial.SharedPreferenceManager
 import com.example.thenest_maintrial.databinding.DashboardFragBinding
 
 class DashboardFragment: Fragment() {
 
     private lateinit var binding: DashboardFragBinding
+    private lateinit var sharedPreferenceManager: SharedPreferenceManager
     //private lateinit var dashboardItemAdapter: DashboardItemAdapter todo
 
     override fun onCreateView(
@@ -21,12 +24,20 @@ class DashboardFragment: Fragment() {
 
     ): View? {
         binding = DashboardFragBinding.inflate(inflater,container,false)
+        //initialise sharedPreferenceManager
+        sharedPreferenceManager = SharedPreferenceManager(requireContext())
+        val role = sharedPreferenceManager.getRole()
+        val fragment: Fragment = if (role == "tenant") {
+            TenantHomeFragment()
+        } else {
+            HomeFragment()
+        }
         val homeFragment = HomeFragment()
         val calendarFragment = CalendarFragment()
         val maintenanceFragment = MaintenanceFragment()
         val reportsFragment = ReportsFragment()
 
-        setCurrentFragment(homeFragment)
+        setCurrentFragment(fragment)
 
         binding.bottomNavView.setOnItemSelectedListener{
 
@@ -40,11 +51,11 @@ class DashboardFragment: Fragment() {
         }
 
 
-//        binding.fab.setOnClickListener{
-//            val action = DashboardFragmentDirections.actionDashboardFragmentToAddTransactionFragment()
-//
-//            findNavController().navigate(action)
-//        }
+        binding.fab.setOnClickListener{
+            val action = DashboardFragmentDirections.actionDashboardFragmentToDashboardFABFragment()
+
+            findNavController().navigate(action)
+        }
         return binding.root
     }
 

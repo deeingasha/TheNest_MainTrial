@@ -25,4 +25,14 @@ class SharedPreferenceManager(context: Context) {
     fun getUsername(): String? {
         return sharedPreferences?.getString("username", null)
     }
+
+    fun storeRole(role: String) {
+        with(sharedPreferences.edit()) {
+            this?.putString("role", role)
+            this?.apply()
+        }
+    }
+    fun getRole(): String? {
+        return sharedPreferences?.getString("role", null)
+    }
 }

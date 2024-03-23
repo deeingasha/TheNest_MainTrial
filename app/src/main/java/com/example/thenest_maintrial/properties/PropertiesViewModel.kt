@@ -30,6 +30,7 @@ class PropertiesViewModel @Inject constructor(
 
     //create an instance of the adapter
     val propertiesRvAdapter = PropertiesRvAdapter(emptyList())
+    val unitAdapter = UnitRvAdapter(emptyList())
 
     fun getLLProperties() {
        viewModelScope.launch {
@@ -39,6 +40,15 @@ class PropertiesViewModel @Inject constructor(
                if (response.isSuccessful) {
                    _llProperties.value = Resource.success(response.body(), message = response.body()?.message)
                    propertiesRvAdapter.updateData(response.body()?.data?: emptyList())
+
+                   println("success1 : ${response.body()?.data}")
+                   val propDets = response.body()?.data
+                   val llunits = propDets?.flatMap { it.units?: emptyList()}
+                   println("ll units: $llunits")
+                   if (llunits != null) {
+                       unitAdapter.updateData(llunits)
+                   }
+
                    println("data from success: ${response.body()?.data}")
                } else {
                    val errorBody = response.errorBody()?.toString()?: "Error Occurred"

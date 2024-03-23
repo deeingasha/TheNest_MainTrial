@@ -62,6 +62,12 @@
         <action
             android:id="@+id/action_dashboardFragment_to_propertiesFragment"
             app:destination="@id/propertiesFragment" />
+        <action
+            android:id="@+id/action_dashboardFragment_to_dashboard_FAB_Fragment"
+            app:destination="@id/dashboard_FAB_Fragment" />
+        <action
+            android:id="@+id/action_dashboardFragment_to_unitsFragment"
+            app:destination="@id/unitsFragment" />
     </fragment>
     <fragment
         android:id="@+id/expensesFragment"
@@ -90,17 +96,56 @@
         android:name="com.example.thenest_maintrial.SettingsFragment"
         android:label="SettingsFragment" />
     <fragment
-        android:id="@+id/homeFragment"
-        android:name="com.example.thenest_maintrial.dashboard.HomeFragment"
-        android:label="fragment_home"
-        tools:layout="@layout/fragment_home" >
-        <action
-            android:id="@+id/action_homeFragment_to_propertiesFragment"
-            app:destination="@id/propertiesFragment" />
-    </fragment>
-    <fragment
         android:id="@+id/propertiesFragment"
         android:name="com.example.thenest_maintrial.properties.PropertiesFragment"
         android:label="PropertiesFragment"
-        tools:layout="@layout/fragment_properties_list"/>
+        tools:layout="@layout/fragment_properties_list">
+        <action
+            android:id="@+id/action_propertiesFragment_to_addPropertyFragment"
+            app:destination="@id/addPropertyFragment" />
+        <action
+            android:id="@+id/action_propertiesFragment_to_propertySingleViewFragment"
+            app:destination="@id/propertySingleViewFragment" />
+        <action
+            android:id="@+id/action_propertiesFragment_to_dashboardFragment"
+            app:destination="@id/dashboardFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addPropertyFragment"
+        android:name="com.example.thenest_maintrial.properties.AddPropertyFragment"
+        android:label="AddPropertyFragment"
+        tools:layout="@layout/fragment_properties_add">
+        <action
+            android:id="@+id/action_addPropertyFragment_to_propertySingleViewFragment"
+            app:destination="@id/propertySingleViewFragment" />
+        <action
+            android:id="@+id/action_addPropertyFragment_to_propertiesFragment"
+            app:destination="@id/propertiesFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/propertySingleViewFragment"
+        android:name="com.example.thenest_maintrial.properties.PropertySingleViewFragment"
+        android:label="fragment_property_single_view"
+        tools:layout="@layout/fragment_property_single_view" >
+        <argument
+            android:name="pID"
+            app:argType="string"
+            app:nullable="true" />
+        <action
+            android:id="@+id/action_propertySingleViewFragment_to_propertiesFragment"
+            app:destination="@id/propertiesFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/dashboard_FAB_Fragment"
+        android:name="com.example.thenest_maintrial.dashboard.Dashboard_FAB_Fragment"
+        android:label="fragment_dashboard_f_a_b"
+        tools:layout="@layout/fragment_dashboard_f_a_b" >
+        <action
+            android:id="@+id/action_dashboard_FAB_Fragment_to_addPropertyFragment"
+            app:destination="@id/addPropertyFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/unitsFragment"
+        android:name="com.example.thenest_maintrial.properties.UnitsFragment"
+        android:label="UnitsFragment" />
 </navigation>
