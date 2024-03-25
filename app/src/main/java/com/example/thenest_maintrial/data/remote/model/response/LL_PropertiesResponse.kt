@@ -24,3 +24,14 @@ data class singlePropertyResponse (
     val data: LL_Property?,
     val message: String,
 )
+
+data class createUnit(
+    val propertyID: String,
+    val total_units: Int,
+    val unit_types: List<UnitType>,
+)
+data class UnitType(
+    val type: String,
+    val count: Int,
+    val rent: Int,
+)

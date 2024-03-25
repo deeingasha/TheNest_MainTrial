@@ -44,6 +44,7 @@ class CreateAccountFragment : Fragment() {
 
                 if (validateForm()) {
 
+
 //                    popup.createVerifyPopup(context)
 
                     val firstName = (binding.fName.text).toString()
@@ -75,7 +76,7 @@ class CreateAccountFragment : Fragment() {
 //                        "We’ve sent a verification code to +254${phoneStart}***${phoneEnd}"
 //                    popup.timeCountdown.start()
 
-                    saveUserDetails(user)
+                   // saveUserDetails(user)
                 }
 
             }
@@ -97,7 +98,7 @@ class CreateAccountFragment : Fragment() {
                             showToast(resource.message.toString())
                             println("resource.data: $resource")
                             val action =
-                                CreateAccountFragmentDirections.actionCreateAccountFragmentToSecurityQuestionFragment()
+                                CreateAccountFragmentDirections.actionCreateAccountFragmentToLoginFrag()
                             findNavController().navigate(action)
 
                             loadingDialog.dismiss()
@@ -227,6 +228,8 @@ class CreateAccountFragment : Fragment() {
             idnoInputLayout.isErrorEnabled = false
             emailInputLayout.isErrorEnabled = false
             phoneNoLayout.isErrorEnabled = false
+            passwordInputLayout.isErrorEnabled = false
+            passwordConInputLayout.isErrorEnabled = false
         }
     }
 }

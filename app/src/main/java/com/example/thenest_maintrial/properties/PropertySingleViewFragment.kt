@@ -86,6 +86,11 @@ class PropertySingleViewFragment : Fragment() {
                                 emptyAnimationP.visibility = View.VISIBLE
                                 emptyPropTV2.visibility = View.VISIBLE
                                 autoPopUnitsBtn.visibility = View.VISIBLE
+
+                                autoPopUnitsBtn.setOnClickListener {
+                                    val action = PropertySingleViewFragmentDirections.actionPropertySingleViewFragmentToAddUnitsFragment()
+                                    findNavController().navigate(action)
+                                }
                             }
 
 

@@ -8,6 +8,7 @@ import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
 import com.example.thenest_maintrial.data.remote.PropertyDetails
 import com.example.thenest_maintrial.data.remote.model.response.LL_PropertiesResponse
+import com.example.thenest_maintrial.data.remote.model.response.PropReportResponse
 import com.example.thenest_maintrial.repo.PropertiesRepository
 import com.example.thenest_maintrial.utils.Resource
 import com.example.thenest_maintrial.utils.SingleLiveEvent
@@ -23,6 +24,9 @@ class PropertiesViewModel @Inject constructor(
 ) : ViewModel(){
     private val _llProperties = MutableLiveData<Resource<LL_PropertiesResponse>>()
     val llProperties: LiveData<Resource<LL_PropertiesResponse>> = _llProperties
+
+    private val _propReport = MutableLiveData<Resource<PropReportResponse>>()
+    val propReport: LiveData<Resource<PropReportResponse>> = _propReport
 
     //livedata object to hold the position of the newly added property
     private val _newPropertyPosition = SingleLiveEvent<Int>()
@@ -88,6 +92,50 @@ class PropertiesViewModel @Inject constructor(
             println("Response from server: ${response.body()}")
             if (response.isSuccessful) {
                 emit(Resource.success(data = response.body(), message = response.body()?.message))
+            } else {
+                val errorBody = response.errorBody()?.string()?: "Error Occurred"
+                val errorMessage = parseErrorMessage(errorBody)
+                emit(Resource.error(message = errorMessage, data = null))
+            }
+        } catch (e: Exception) {
+            emit(Resource.error(e.message ?: "Error Occurred", data = null))
+        }
+    }
+
+    fun createLandlordPropertiesReport(
+        filter: String?,
+        sort: String?,
+        search: String?,
+        pdf: Boolean?
+    ) = liveData(Dispatchers.IO) {
+        emit(Resource.loading(data = null))
+        try {
+            val response = propertiesRepository.createLandlordPropertiesReport(filter, sort, search, pdf)
+            println("Response from server: ${response.body()}")
+            if (response.isSuccessful) {
+                val reponseBody = response.body()
+                emit(Resource.success(data = reponseBody?.data, message = reponseBody?.message))
+
+//                when( val responseBody= response.body()){
+////                    is PropReportResponse.PdfTrue-> {
+////                        val data = responseBody.data
+////                        val message = responseBody.message
+////                        emit(Resource.success(data = data, message = message))
+////                    }
+//                    is PropReportResponse.PdfFalse-> {
+//
+//                        val data = responseBody.data
+//                        val message = responseBody.message
+//                        _propReport.value = Resource.success(data=responseBody, message = message)
+//                        propertiesRvAdapter.updateData(data?: emptyList())
+//
+//                        emit(Resource.success(data = data, message = message))
+//
+//                    }
+//                    else -> {
+//                        emit(Resource.error(message = "Response body is null", data = null))
+//                    }
+
             } else {
                 val errorBody = response.errorBody()?.string()?: "Error Occurred"
                 val errorMessage = parseErrorMessage(errorBody)

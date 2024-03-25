@@ -32,7 +32,7 @@ class DashboardFragment: Fragment() {
         } else {
             HomeFragment()
         }
-        val homeFragment = HomeFragment()
+//        val homeFragment = HomeFragment()
         val calendarFragment = CalendarFragment()
         val maintenanceFragment = MaintenanceFragment()
         val reportsFragment = ReportsFragment()
@@ -42,7 +42,7 @@ class DashboardFragment: Fragment() {
         binding.bottomNavView.setOnItemSelectedListener{
 
             when(it.itemId){
-                R.id.nav_home->setCurrentFragment(homeFragment)
+                R.id.nav_home->setCurrentFragment(fragment)
                 R.id.nav_calendar->setCurrentFragment(calendarFragment)
                 R.id.nav_maintenance->setCurrentFragment(maintenanceFragment)
                 R.id.nav_report->setCurrentFragment(reportsFragment)

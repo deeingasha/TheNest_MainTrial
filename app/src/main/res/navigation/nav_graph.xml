@@ -23,22 +23,18 @@
         android:label="CreateAccountFragment"
         tools:layout="@layout/acc_creation">
         <action
-            android:id="@+id/action_createAccountFragment_to_securityQuestionFragment"
-            app:destination="@id/securityQuestionFragment" />
-        <action
             android:id="@+id/action_createAccountFragment_to_onboardingFrag"
             app:destination="@id/onboardingFrag" />
+        <action
+            android:id="@+id/action_createAccountFragment_to_loginFrag"
+            app:destination="@id/loginFrag" />
 
     </fragment>
     <fragment
         android:id="@+id/securityQuestionFragment"
         android:name="com.example.thenest_maintrial.createaccount.SecurityQuestionFragment"
         android:label="SecurityQuestionFragment"
-        tools:layout="@layout/security_questions">
-        <action
-            android:id="@+id/action_securityQuestionFragment_to_loginFrag"
-            app:destination="@id/loginFrag" />
-    </fragment>
+        tools:layout="@layout/security_questions"/>
     <fragment
         android:id="@+id/forgotPinFragment"
         android:name="com.example.thenest_maintrial.login.ForgotPinFrag"
@@ -71,6 +67,9 @@
         <action
             android:id="@+id/action_dashboardFragment_to_tenantsFragment"
             app:destination="@id/tenantsFragment" />
+        <action
+            android:id="@+id/action_dashboardFragment_to_propertiesReportFragment"
+            app:destination="@id/propertiesReportFragment" />
     </fragment>
     <fragment
         android:id="@+id/expensesFragment"
@@ -137,6 +136,9 @@
         <action
             android:id="@+id/action_propertySingleViewFragment_to_propertiesFragment"
             app:destination="@id/propertiesFragment" />
+        <action
+            android:id="@+id/action_propertySingleViewFragment_to_addUnitsFragment"
+            app:destination="@id/addUnitsFragment" />
     </fragment>
     <fragment
         android:id="@+id/dashboard_FAB_Fragment"
@@ -146,6 +148,9 @@
         <action
             android:id="@+id/action_dashboard_FAB_Fragment_to_addPropertyFragment"
             app:destination="@id/addPropertyFragment" />
+        <action
+            android:id="@+id/action_dashboard_FAB_Fragment_to_securityQuestionFragment"
+            app:destination="@id/securityQuestionFragment" />
     </fragment>
     <fragment
         android:id="@+id/unitsFragment"
@@ -157,4 +162,23 @@
         android:name="com.example.thenest_maintrial.tenants.TenantsFragment"
         android:label="TenantsFragment"
         tools:layout="@layout/fragment_tenants_list"/>
+    <fragment
+        android:id="@+id/reportsFragment"
+        android:name="com.example.thenest_maintrial.dashboard.ReportsFragment"
+        android:label="fragment_reports"
+        tools:layout="@layout/fragment_reports" >
+        <action
+            android:id="@+id/action_reportsFragment_to_propertiesReportFragment"
+            app:destination="@id/propertiesReportFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/propertiesReportFragment"
+        android:name="com.example.thenest_maintrial.reports.PropertiesReportFragment"
+        android:label="fragment_properties_report"
+        tools:layout="@layout/fragment_properties_list" />
+    <fragment
+        android:id="@+id/addUnitsFragment"
+        android:name="com.example.thenest_maintrial.properties.placeholder.addUnitsFragment"
+        android:label="fragment_add_units"
+        tools:layout="@layout/fragment_add_units" />
 </navigation>

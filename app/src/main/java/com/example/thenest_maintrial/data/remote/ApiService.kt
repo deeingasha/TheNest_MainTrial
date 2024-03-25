@@ -5,6 +5,9 @@ import com.example.thenest_maintrial.data.remote.model.response.LL_PropertiesRes
 import com.example.thenest_maintrial.data.remote.model.response.LL_TenantsResponse
 import com.example.thenest_maintrial.data.remote.model.response.LlDashboardResponse
 import com.example.thenest_maintrial.data.remote.model.response.LoginResponse
+import com.example.thenest_maintrial.data.remote.model.response.MaintenanceResponse
+import com.example.thenest_maintrial.data.remote.model.response.PropReportResponse
+import com.example.thenest_maintrial.data.remote.model.response.TenantDashboardResponse
 import com.example.thenest_maintrial.data.remote.model.response.UserResponse
 import com.example.thenest_maintrial.data.remote.model.response.addPropertyResponse
 import com.example.thenest_maintrial.data.remote.model.response.singlePropertyResponse
@@ -15,6 +18,7 @@ import retrofit2.http.GET
 import retrofit2.http.PATCH
 import retrofit2.http.POST
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface ApiService {
 //    @Headers("Content-Type:application/json")
@@ -52,4 +56,23 @@ interface ApiService {
    @GET("tenants/landlord")
     suspend fun getLlTenants(): Response<LL_TenantsResponse>
 
+    //val report = apiService.createLandlordPropertiesReport(filter = "{\"address\":\"123 Main St\"}", sort = "-createdAt", search = "tenantName", detailed = true)
+//val report = apiService.createLandlordPropertiesReport(
+//    filter = "{\"address\":\"123 Main St\"}",sort = "-createdAt",search = "tenantName", detailed = true, startDate = "2022-01-01", endDate = "2022-12-31")
+    // @Query("startDate") startDate:String?
+    // @Query("endDate") endDate: String?
+    @GET("properties/report")
+    suspend fun createLandlordPropertiesReport(
+        @Query("filter") filter: String?,
+        @Query("sort") sort: String?,
+        @Query("search") search: String?,
+        @Query("pdf") pdf: Boolean?
+
+    ): Response<PropReportResponse>
+
+    @GET("dashboard/tenant")
+    suspend fun getTenantDashboardDetails(): Response<TenantDashboardResponse>
+
+    @GET("maintenance/requests/all")
+    suspend fun getMaintenanceRequests(): Response<MaintenanceResponse>
 }

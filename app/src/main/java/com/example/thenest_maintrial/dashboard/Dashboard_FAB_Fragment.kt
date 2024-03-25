@@ -52,8 +52,11 @@ class Dashboard_FAB_Fragment : Fragment() {
                 //TODO() navigate to add unit fragment
             }
             addTenantBtn.setOnClickListener {
-                //TODO() navigate to add tenant fragment
+                val action=
+                    Dashboard_FAB_FragmentDirections.actionDashboardFABFragmentToSecurityQuestionFragment()
+                findNavController().navigate(action)
             }
+
         }
     }
 

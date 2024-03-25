@@ -2,6 +2,7 @@ package com.example.thenest_maintrial.di
 
 import android.app.Application
 import android.content.Context
+import android.util.Log
 import androidx.room.Room
 import com.example.thenest_maintrial.data.local.AppDatabase
 import com.example.thenest_maintrial.data.remote.ApiService
@@ -14,6 +15,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
@@ -26,7 +28,13 @@ object AppModule {
 
     private fun getOkHttpClient(context: Context):OkHttpClient.Builder =
         try {
+            val loggingInterceptor = HttpLoggingInterceptor {message ->
+                Log.i("OkHttp", message)
+            }.apply {
+            level = HttpLoggingInterceptor.Level.BODY
+        }
             val builder = OkHttpClient.Builder()
+            builder.addInterceptor(loggingInterceptor)
             builder.addInterceptor{
                 AuthInterceptor(context).intercept(it)
             }
