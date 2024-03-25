@@ -11,8 +11,8 @@
         android:layout_width="match_parent"
         android:layout_height="100dp"
 
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginStart="1dp"
+        android:layout_marginEnd="1dp"
         android:background="@drawable/bottom_nav_rounded"
         android:clickable="true">
 
@@ -24,17 +24,22 @@
                 android:id="@+id/tenant_unitNo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginBottom="16dp"
                 android:text="0"
-                tools:layout_editor_absoluteX="146dp"
-                tools:layout_editor_absoluteY="62dp" />
+                android:textAlignment="viewEnd"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/tenantUnit" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/tenantUnit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="34dp"
+                android:layout_marginBottom="16dp"
                 android:text="Unit"
-                tools:layout_editor_absoluteX="103dp"
-                tools:layout_editor_absoluteY="62dp" />
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/tenantID" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/tenant_fName"
@@ -75,44 +80,41 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
+                android:layout_marginBottom="16dp"
                 android:text="Start Date"
-                app:layout_constraintBottom_toTopOf="@+id/TisActiveTV"
-                app:layout_constraintEnd_toStartOf="@+id/start_date"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.483" />
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/start_date" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/start_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"
                 android:text="1/4/24"
-                app:layout_constraintBottom_toTopOf="@+id/isActiveCB"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.5" />
+                android:textAlignment="viewEnd"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/TisActiveTV"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
                 android:layout_marginEnd="8dp"
                 android:text="isActive"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/isActiveCB"
-                app:layout_constraintTop_toBottomOf="@id/start_date_tv"
-                app:layout_constraintVertical_bias="0.5" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <com.google.android.material.checkbox.MaterialCheckBox
                 android:id="@+id/isActiveCB"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
+                android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
                 android:clickable="false"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/start_date"
-                app:layout_constraintVertical_bias="0.5" />
+                app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

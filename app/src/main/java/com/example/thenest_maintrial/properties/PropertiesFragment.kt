@@ -40,7 +40,6 @@ class PropertiesFragment : Fragment() {
     private lateinit var loadingDialog: LoadingDialog
     private lateinit var propertiesRv: RecyclerView
     private lateinit var emptyAnimation: LottieAnimationView
-    private lateinit var emptyText: TextView
     private lateinit var backButon: ImageButton
     private lateinit var titleCard:CardView
     private  lateinit var addPropertyBtn: FloatingActionButton
@@ -63,7 +62,6 @@ class PropertiesFragment : Fragment() {
         //initialize the views
         propertiesRv = view.findViewById(R.id.propertiesListRv_view)
         emptyAnimation = view.findViewById(R.id.empty_animationP)
-        emptyText = view.findViewById(R.id.emptyProp_TV)
         backButon = view.findViewById(R.id.property_ca_btn)
         titleCard = view.findViewById(R.id.propertiesTitleCardView)
         addPropertyBtn = view.findViewById(R.id.fab_add_Property)
@@ -90,10 +88,11 @@ class PropertiesFragment : Fragment() {
         propertiesViewModel.llProperties.observe(viewLifecycleOwner, Observer { resource ->
             when (resource.status) {
                 Status.SUCCESS -> {
+                    loadingDialog.dismiss()
                     println("resource Success: ${resource.data}")
                     println("resource message: ${resource.message}")
                     if (resource.message.toString() != "No properties yet") {
-                        loadingDialog.dismiss()
+
                         propertiesRv.visibility = View.VISIBLE
                         emptyAnimation.visibility = View.GONE
                         emptyProp.visibility = View.GONE
@@ -101,7 +100,6 @@ class PropertiesFragment : Fragment() {
                         sharedViewModel.llProperties.value = resource
 
                     } else {
-                        loadingDialog.dismiss()
                         propertiesRv.visibility = View.GONE
                         emptyAnimation.visibility = View.VISIBLE
                         emptyProp.visibility = View.VISIBLE

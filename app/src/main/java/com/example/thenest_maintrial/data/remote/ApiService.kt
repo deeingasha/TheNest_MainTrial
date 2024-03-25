@@ -2,6 +2,7 @@ package com.example.thenest_maintrial.data.remote
 
 import com.example.thenest_maintrial.data.remote.model.response.ForgotPinResponse
 import com.example.thenest_maintrial.data.remote.model.response.LL_PropertiesResponse
+import com.example.thenest_maintrial.data.remote.model.response.LL_TenantsResponse
 import com.example.thenest_maintrial.data.remote.model.response.LlDashboardResponse
 import com.example.thenest_maintrial.data.remote.model.response.LoginResponse
 import com.example.thenest_maintrial.data.remote.model.response.UserResponse
@@ -47,5 +48,8 @@ interface ApiService {
    suspend fun getSingleProperty(
        @Path("propertyId") propertyId: String
    ): Response<singlePropertyResponse>
+
+   @GET("tenants/landlord")
+    suspend fun getLlTenants(): Response<LL_TenantsResponse>
 
 }

@@ -68,6 +68,9 @@
         <action
             android:id="@+id/action_dashboardFragment_to_unitsFragment"
             app:destination="@id/unitsFragment" />
+        <action
+            android:id="@+id/action_dashboardFragment_to_tenantsFragment"
+            app:destination="@id/tenantsFragment" />
     </fragment>
     <fragment
         android:id="@+id/expensesFragment"
@@ -147,5 +150,11 @@
     <fragment
         android:id="@+id/unitsFragment"
         android:name="com.example.thenest_maintrial.properties.UnitsFragment"
-        android:label="UnitsFragment" />
+        android:label="UnitsFragment"
+        tools:layout="@layout/fragment_unit_list"/>
+    <fragment
+        android:id="@+id/tenantsFragment"
+        android:name="com.example.thenest_maintrial.tenants.TenantsFragment"
+        android:label="TenantsFragment"
+        tools:layout="@layout/fragment_tenants_list"/>
 </navigation>
