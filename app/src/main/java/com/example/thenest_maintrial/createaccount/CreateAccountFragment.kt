@@ -76,7 +76,7 @@ class CreateAccountFragment : Fragment() {
 //                        "We’ve sent a verification code to +254${phoneStart}***${phoneEnd}"
 //                    popup.timeCountdown.start()
 
-                   // saveUserDetails(user)
+                   saveUserDetails(user)
                 }
 
             }
